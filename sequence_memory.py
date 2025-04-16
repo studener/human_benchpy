@@ -5,19 +5,25 @@ import time
 pygame.init()
 
 screen = pygame.display.set_mode((720,720))
-sound = pygame.mixer.Sound('sound.mp3')
-font = pygame.font.Font(size=55)
+sound = pygame.mixer.Sound('assets/sound.mp3')
+font = pygame.font.Font(size=75)
+points_font = pygame.font.Font(size=1000)
 screen.fill("#57B7F3")
-screen.blit(font.render('CLICK TO PLAY', True, 'white'), (175, 340))
+start_text = font.render('CLICK TO PLAY', True, 'white')
+text_pos = start_text.get_rect(center = pygame.display.get_surface().get_rect().center)
+screen.blit(start_text, text_pos)
 pygame.display.flip()
 clock = pygame.time.Clock()
 
 # Variables
-done = False # Puts game loop on hold until mouse has been clicked required amount
-rounds = [] # saves buttons that lit up
+done = False # Puts game loop on hold until mouse has been clicked required number of times
+rounds = [] # stores which buttons lit up
 rounds_copy = [1] # copy of rounds, of which elements get removed to check if right square was clicked
 counter = -1 # keep track of how many times mouse has been clicked
-squares = {'one':[15,15,220,220], 'two':[250,15,220,220], 'three':[485,15,220,220],'four':[15,250,220,220],'five':[250,250,220,220],'six':[485,250,220,220],'seven':[15,485,220,220],'eight':[250,485,220,220],'nine':[485,485,220,220]}
+squares = {'one':[15,15,220,220], 'two':[250,15,220,220], 'three':[485,15,220,220], 
+           'four':[15,250,220,220], 'five':[250,250,220,220], 'six':[485,250,220,220], 
+           'seven':[15,485,220,220], 'eight':[250,485,220,220], 'nine':[485,485,220,220]}
+last_item = set(['a'])
 
 while True:
     # Process player inputs.
@@ -37,14 +43,20 @@ while True:
                 time.sleep(0.3)
                 pygame.draw.rect(screen, '#3478C6', squares[square],border_radius=20)
                 pygame.display.flip()
+                if counter == 0:
+                    screen.fill("#4A97C7")
+                    for i in squares:
+                        pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
             else:
                 # This is what happens when you lose
                 screen.fill("#FF0000")
-                screen.blit(font.render(f'Score: {len(rounds)-1}', True, 'white'), (180, 340))
-                screen.blit(font.render('This window will close in 5 seconds', True, 'white'), (10, 400))
+                points = points_font.render(f'{len(rounds)-1}', True, '#B50012')
+                points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
+                screen.blit(points, points_pos)
+                # screen.blit(font.render('THIS WINDOW WILL CLOSE IN 5 SECONDS', True, 'white'), (10, 400))
                 pygame.display.flip()
                 print(f'\nYou lost. Score: {len(rounds)-1}')
-                time.sleep(5)
+                time.sleep(3)
                 pygame.quit()
                 raise SystemExit
 
@@ -52,7 +64,7 @@ while True:
                 done = True
 
         while done == True:
-            time.sleep(0.2)
+            time.sleep(0.8)
             done = False
 
             # draw screen and squares
@@ -62,7 +74,9 @@ while True:
 
             pygame.display.flip()
 
-            rounds.append(np.random.choice(list(squares.keys())))
+            if len(rounds): # make sure there are no direct repeats
+                last_item = set(rounds[-1])
+            rounds.append(np.random.choice(list(set(squares.keys()).difference(last_item))))
             rounds_copy = rounds.copy()
             counter = len(rounds)
             
