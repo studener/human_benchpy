@@ -75,7 +75,7 @@ while True:
             pygame.display.flip()
 
             if len(rounds): # make sure there are no direct repeats
-                last_item = set(rounds[-1])
+                last_item = {rounds[-1]}
             rounds.append(np.random.choice(list(set(squares.keys()).difference(last_item))))
             rounds_copy = rounds.copy()
             counter = len(rounds)
