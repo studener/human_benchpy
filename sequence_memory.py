@@ -5,7 +5,8 @@ import time
 pygame.init()
 
 screen = pygame.display.set_mode((720,720))
-sound = pygame.mixer.Sound('assets/sound.mp3')
+move_sound = pygame.mixer.Sound('assets/move.mp3')
+win_sound = pygame.mixer.Sound('assets/win.mp3')
 font = pygame.font.Font(size=75)
 points_font = pygame.font.Font(size=1000)
 screen.fill("#57B7F3")
@@ -38,9 +39,12 @@ while True:
             elif squares[square][0] < pygame.mouse.get_pos()[0] < squares[square][0] + 220 and squares[square][1] < pygame.mouse.get_pos()[1] < squares[square][1] + 220:
                 counter -= 1
                 pygame.draw.rect(screen, 'white', squares[square],border_radius=20)
-                sound.play()
+                if counter == 0:
+                    win_sound.play()
+                else:
+                    move_sound.play()
                 pygame.display.flip()
-                time.sleep(0.3)
+                time.sleep(0.4)
                 pygame.draw.rect(screen, '#3478C6', squares[square],border_radius=20)
                 pygame.display.flip()
                 if counter == 0:
@@ -83,9 +87,12 @@ while True:
             for i in range(len(rounds)):
                 time.sleep(0.2)
                 pygame.draw.rect(screen, 'white', squares[rounds[i]],border_radius=20)
-                sound.play()
+                if i == len(rounds)-1:
+                    win_sound.play()
+                else:
+                    move_sound.play()
                 pygame.display.flip()
-                time.sleep(0.7)
+                time.sleep(0.4)
                 pygame.draw.rect(screen, '#3478C6', squares[rounds[i]],border_radius=20)
                 pygame.display.flip()
 
