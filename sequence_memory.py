@@ -1,6 +1,7 @@
 import pygame
-import numpy as np
 import time
+import numpy as np
+import pandas as pd
 
 pygame.init()
 
@@ -60,15 +61,17 @@ while True:
                 # screen.blit(font.render('THIS WINDOW WILL CLOSE IN 5 SECONDS', True, 'white'), (10, 400))
                 pygame.display.flip()
                 print(f'\nYou lost. Score: {len(rounds)-1}')
+                df = pd.DataFrame({'Score':[len(rounds)-1]})
+                df.to_csv('scores/scores_sequence_memory.csv', mode='a', index=False, header=False)
                 time.sleep(3)
                 pygame.quit()
                 raise SystemExit
 
             if counter == 0:
                 done = True
+                time.sleep(0.8)
 
         while done == True:
-            time.sleep(0.8)
             done = False
 
             # draw screen and squares
