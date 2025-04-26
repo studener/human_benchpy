@@ -19,13 +19,14 @@ clock = pygame.time.Clock()
 
 # Variables
 done = False # Puts game loop on hold until mouse has been clicked required number of times
-rounds = 0 # stores which buttons lit up
-displayed = [1] # copy of rounds, of which elements get removed to check if right square was clicked
+rounds = 0 # counts number of rounds
+displayed = [1] # saves lit up squares
 counter = -1 # keep track of how many times mouse has been clicked
+field_size = [3,3,4,4,4,5,5,5,6,6,6,6,6,7,7,7,7] # lets hope nobody gets further than this
 
 def make_squares(n):
-    gap = [15, 12, 10, 12]
-    size = [220, 165, 132, 106]
+    gap = [15, 12, 10, 12, 13]
+    size = [220, 165, 132, 106, 88]
 
     names = (np.arange(n**2)+1).astype(str)
     gaps = np.arange(1, n+1) * gap[n-3] + np.arange(n) * size[n-3]
@@ -35,8 +36,6 @@ def make_squares(n):
     return pd.DataFrame([np.tile(gaps, n), np.repeat(gaps, n), np.repeat(size[n-3], n**2), np.repeat(size[n-3], n**2)], columns=names).to_dict('list')
 
 squares = make_squares(3)
-
-last_item = set(['a'])
 
 def clicked_square(x,y):
     options = pd.DataFrame(np.array(list(squares.keys()),).reshape(int(len(squares)**(1/2)),int(len(squares)**(1/2))))
@@ -91,17 +90,17 @@ while True:
             # draw screen and squares
             screen.fill("#57B7F3")
             pygame.display.flip()
+            squares = make_squares(field_size[rounds])
             for i in squares:
                 pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
 
             pygame.display.flip()
             time.sleep(0.5)
 
-            to_display = np.random.choice(list(squares.keys()), replace=False, size=rounds+3)
-            displayed = to_display.copy()
-            counter = len(to_display)
+            displayed = np.random.choice(list(squares.keys()), replace=False, size=rounds+3)
+            counter = len(displayed)
             
-            for i in to_display:
+            for i in displayed:
                 pygame.draw.rect(screen, 'white', squares[i],border_radius=20)
             
             pygame.display.flip()
