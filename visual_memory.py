@@ -53,6 +53,7 @@ while True:
             if counter == -1:
                 done = True
             elif clicked in displayed:
+                displayed = displayed[displayed != clicked] # make sure square cant be clicked multiple times
                 counter -= 1
                 square = clicked
                 pygame.draw.rect(screen, 'white', squares[square],border_radius=20)
