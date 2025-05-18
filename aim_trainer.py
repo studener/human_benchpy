@@ -34,7 +34,6 @@ while True:
                 done = True
             elif rounds < 15:
                 x, y = pygame.mouse.get_pos()
-                print((x-xcord), (y-ycord))
                 if ((x-xcord)**2 + (y-ycord)**2)**(0.5) < 50:
                     done = True
                     rounds += 1
@@ -61,7 +60,6 @@ while True:
             xcord, ycord = np.random.randint(low=50, high=670, size = 2)
             # pygame.draw.rect(screen, '#FFFFFF', (xcord,ycord,200,200),border_radius=100)
             pygame.draw.circle(screen, '#FFFFFF', (xcord, ycord), 50)
-            print(xcord, ycord)
 
             pygame.display.flip()
 
