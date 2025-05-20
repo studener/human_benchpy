@@ -32,6 +32,7 @@ while True:
                 start = time.time()
                 rounds += 1
                 done = True
+
             elif rounds < 15:
                 x, y = pygame.mouse.get_pos()
                 if ((x-xcord)**2 + (y-ycord)**2)**(0.5) < 50:
@@ -52,15 +53,14 @@ while True:
                 pygame.quit()
                 raise SystemExit
 
-        while done == True:
-            done = False
+    if done:
+        done = False
 
-            # draw screen and circle
-            screen.fill("#57B7F3")
-            xcord, ycord = np.random.randint(low=50, high=670, size = 2)
-            # pygame.draw.rect(screen, '#FFFFFF', (xcord,ycord,200,200),border_radius=100)
-            pygame.draw.circle(screen, '#FFFFFF', (xcord, ycord), 50)
-
-            pygame.display.flip()
+        # draw screen and circle
+        screen.fill("#57B7F3")
+        xcord, ycord = np.random.randint(low=50, high=670, size = 2)
+        # pygame.draw.rect(screen, '#FFFFFF', (xcord,ycord,200,200),border_radius=100)
+        pygame.draw.circle(screen, '#FFFFFF', (xcord, ycord), 50)
+        pygame.display.flip()
 
     clock.tick(60)         # wait until next frame (at 60 FPS)

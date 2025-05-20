@@ -69,31 +69,31 @@ while True:
                 pygame.quit()
                 raise SystemExit
 
-        while done == True:
-            done = False
+    if done:
+        done = False
 
-            if np.random.randint(1, np.random.randint(3, 6)) == 1 and rounds > 1:
-                # make sure new word isnt last word
-                word = seen[np.random.randint(0, max(1, len(seen)-1))]
-                del seen[seen.index(word)]
-                seen.append(word)
-                print(word)
-                truth = 'seen'
-            else:
-                index = np.random.randint(0, len(words))
-                word = words[index]
-                print(word)
-                del words[index]
-                seen.append(word)
-                truth = 'new'
+        if np.random.randint(1, np.random.randint(3, 6)) == 1 and rounds > 1:
+            # make sure new word isnt last word
+            word = seen[np.random.randint(0, max(1, len(seen)-1))]
+            del seen[seen.index(word)]
+            seen.append(word)
+            print(word)
+            truth = 'seen'
+        else:
+            index = np.random.randint(0, len(words))
+            word = words[index]
+            print(word)
+            del words[index]
+            seen.append(word)
+            truth = 'new'
 
-            # draw screen and squares
-            screen.fill("#57B7F3")
-            word = font.render(f'{word}', True, 'white')
-            pos = word.get_rect(center = pygame.display.get_surface().get_rect().center)
-            screen.blit(word, pos)
-            screen.blit(img, (0,480))
+        # draw screen and squares
+        screen.fill("#57B7F3")
+        word = font.render(f'{word}', True, 'white')
+        pos = word.get_rect(center = pygame.display.get_surface().get_rect().center)
+        screen.blit(word, pos)
+        screen.blit(img, (0,480))
 
-            pygame.display.flip()  # Refresh on-screen display
+        pygame.display.flip()  # Refresh on-screen display
 
     clock.tick(60)         # wait until next frame (at 60 FPS)

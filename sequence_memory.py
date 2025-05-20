@@ -71,34 +71,34 @@ while True:
                 done = True
                 time.sleep(0.8)
 
-        while done == True:
-            done = False
+    while done:
+        done = False
 
-            # draw screen and squares
-            screen.fill("#57B7F3")
-            for i in squares:
-                pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
+        # draw screen and squares
+        screen.fill("#57B7F3")
+        for i in squares:
+            pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
 
+        pygame.display.flip()
+
+        if len(rounds): # make sure there are no direct repeats
+            last_item = {rounds[-1]}
+        rounds.append(np.random.choice(list(set(squares.keys()).difference(last_item))))
+        rounds_copy = rounds.copy()
+        counter = len(rounds)
+        
+        for i in range(len(rounds)):
+            time.sleep(0.2)
+            pygame.draw.rect(screen, 'white', squares[rounds[i]],border_radius=20)
+            if i == len(rounds)-1:
+                win_sound.play()
+            else:
+                move_sound.play()
+            pygame.display.flip()
+            time.sleep(0.4)
+            pygame.draw.rect(screen, '#3478C6', squares[rounds[i]],border_radius=20)
             pygame.display.flip()
 
-            if len(rounds): # make sure there are no direct repeats
-                last_item = {rounds[-1]}
-            rounds.append(np.random.choice(list(set(squares.keys()).difference(last_item))))
-            rounds_copy = rounds.copy()
-            counter = len(rounds)
-            
-            for i in range(len(rounds)):
-                time.sleep(0.2)
-                pygame.draw.rect(screen, 'white', squares[rounds[i]],border_radius=20)
-                if i == len(rounds)-1:
-                    win_sound.play()
-                else:
-                    move_sound.play()
-                pygame.display.flip()
-                time.sleep(0.4)
-                pygame.draw.rect(screen, '#3478C6', squares[rounds[i]],border_radius=20)
-                pygame.display.flip()
-
-            pygame.display.flip()  # Refresh on-screen display
+        pygame.display.flip()  # Refresh on-screen display
 
     clock.tick(60)         # wait until next frame (at 60 FPS)

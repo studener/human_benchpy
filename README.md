@@ -3,6 +3,7 @@ This repo contains python clones of the brain games and cognitive tests found on
 
 ### Currently Available Games:
 - **Aim Trainer**: Click 15 targets as fast as possible.
+- **Number Memory**: Try to remember number sequences of increasing length each round.
 - **Sequence Memory**: Memorize a sequence of lit up squares, that gets longer each round.
 - **Verbal Memory**: Remember if a word shown on screen has already been displayed.
 - **Visual Memory**: Memorize the positions of multiple lit up squares at once.

@@ -85,33 +85,33 @@ while True:
                 done = True
                 time.sleep(0.8)
 
-        while done == True:
-            done = False
+    while done:
+        done = False
 
-            # draw screen and squares
-            screen.fill("#57B7F3")
-            pygame.display.flip()
-            squares = make_squares(field_size[rounds])
-            for i in squares:
-                pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
+        # draw screen and squares
+        screen.fill("#57B7F3")
+        pygame.display.flip()
+        squares = make_squares(field_size[rounds])
+        for i in squares:
+            pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
 
-            pygame.display.flip()
-            time.sleep(0.5)
+        pygame.display.flip()
+        time.sleep(0.5)
 
-            displayed = np.random.choice(list(squares.keys()), replace=False, size=rounds+3)
-            counter = len(displayed)
-            
-            for i in displayed:
-                pygame.draw.rect(screen, 'white', squares[i],border_radius=20)
-            
-            pygame.display.flip()
-            win_sound.play()
-            time.sleep(1.5)
+        displayed = np.random.choice(list(squares.keys()), replace=False, size=rounds+3)
+        counter = len(displayed)
+        
+        for i in displayed:
+            pygame.draw.rect(screen, 'white', squares[i],border_radius=20)
+        
+        pygame.display.flip()
+        win_sound.play()
+        time.sleep(1.5)
 
-            screen.fill("#57B7F3")
-            for i in squares:
-                pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
+        screen.fill("#57B7F3")
+        for i in squares:
+            pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
 
-            pygame.display.flip()  # Refresh on-screen display
+        pygame.display.flip()  # Refresh on-screen display
 
     clock.tick(60)         # wait until next frame (at 60 FPS)
