@@ -1,3 +1,4 @@
+# TODO: add blinking cursor, loosing screen looks bad
 import numpy as np
 import pygame
 import time
@@ -29,16 +30,18 @@ while True:
     for event in pygame.event.get():
         if player:
             screen.fill("#57B7F3")
+            pygame.draw.rect(screen, '#3478C6', (100, 315, 520, 80), border_radius=5)
             guessed = font.render(f'{guess}', True, '#FFFFFF')
             guess_pos = guessed.get_rect(center = pygame.display.get_surface().get_rect().center)
             screen.blit(guessed, guess_pos)
+
             pygame.display.flip()
         if event.type == pygame.QUIT:
             pygame.quit()
             raise SystemExit
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and digits == 1:
             done = True 
-        if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN and not countdown:
             if event.key == pygame.K_RETURN:
                 if int(guess) == number:
                     countdown = True
@@ -55,6 +58,8 @@ while True:
                     time.sleep(3)
                     pygame.quit()
                     raise SystemExit
+            elif event.key == pygame.K_BACKSPACE:
+                guess = guess[:-1]
             else:
                 guess += event.unicode
             
@@ -83,6 +88,7 @@ while True:
             player = True
             countdown = False
             screen.fill("#57B7F3")
+            pygame.draw.rect(screen, '#3478C6', (100, 315, 520, 80), border_radius=5)
             pygame.display.flip()
 
     clock.tick(60)         # wait until next frame (at 60 FPS)

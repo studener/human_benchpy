@@ -43,12 +43,12 @@ while True:
                 # This is what happens after hitting all targets
                 screen.fill("#57B7F3")
                 interval = round((time.time()-start)/15, 2)
-                points = points_font.render(f'{interval}ms', True, '#FFFFFF')
+                points = points_font.render(f'{interval}s', True, '#FFFFFF')
                 points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
                 screen.blit(points, points_pos)
                 # screen.blit(font.render('THIS WINDOW WILL CLOSE IN 5 SECONDS', True, 'white'), (10, 400))
                 pygame.display.flip()
-                print(f'\nAverage Time: {interval}ms')
+                print(f'\nAverage Time: {interval}s')
                 time.sleep(3)
                 pygame.quit()
                 raise SystemExit
