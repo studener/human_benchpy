@@ -7,3 +7,16 @@ This repo contains python clones of the brain games and cognitive tests found on
 - **Sequence Memory**: Memorize a sequence of lit up squares, that gets longer each round.
 - **Verbal Memory**: Remember if a word shown on screen has already been displayed.
 - **Visual Memory**: Memorize the positions of multiple lit up squares at once.
+
+### Installation / Utilization:
+First clone the repository to your local machine, then install the dependencies by running
+```bash
+pip install -r requirements.txt
+```
+
+After that, you can play your desired game by running e.g.
+```bash
+python sequence_memory.py
+```
+
+Python 3.11 was used for the project.
