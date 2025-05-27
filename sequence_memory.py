@@ -2,6 +2,7 @@ import pygame
 import time
 import numpy as np
 import pandas as pd
+from plot_scores import make_plot
 
 pygame.init()
 
@@ -62,8 +63,16 @@ while True:
                 pygame.display.flip()
                 print(f'\nYou lost. Score: {len(rounds)-1}')
                 df = pd.DataFrame({'Score':[len(rounds)-1]})
-                df.to_csv('scores/scores_sequence_memory.csv', mode='a', index=False, header=False)
-                time.sleep(3)
+                df.to_csv('scores/sequence_memory.csv', mode='a', index=False, header=False)
+                make_plot('scores/sequence_memory.csv')
+                time.sleep(2)
+
+                hist = pygame.image.load('scores/sequence_memory.png')
+                screen.fill('#FFFFFF')
+                screen.blit(hist, (0,60))
+                pygame.display.flip()
+                time.sleep(5)
+
                 pygame.quit()
                 raise SystemExit
 
