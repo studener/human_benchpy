@@ -44,48 +44,45 @@ def clicked_square(x,y):
 
 while True:
     # Process player inputs.
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            raise SystemExit
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            clicked = clicked_square(*pygame.mouse.get_pos())
-            if counter == -1:
-                done = True
-            elif clicked in displayed:
-                displayed = displayed[displayed != clicked] # make sure square cant be clicked multiple times
-                counter -= 1
-                square = clicked
-                pygame.draw.rect(screen, 'white', squares[square],border_radius=20)
-                if counter == 0:
-                    win_sound.play()
-                else:
-                    move_sound.play()
-                pygame.display.flip()
-
-                if counter == 0:
-                    screen.fill("#4A97C7")
-                    for i in squares:
-                        pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
-            else:
-                # This is what happens when you lose
-                screen.fill("#FF0000")
-                points = points_font.render(f'{rounds}', True, '#B50012')
-                points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
-                screen.blit(points, points_pos)
-                # screen.blit(font.render('THIS WINDOW WILL CLOSE IN 5 SECONDS', True, 'white'), (10, 400))
-                pygame.display.flip()
-                print(f'\nYou lost. Score: {rounds}')
-                time.sleep(3)
+    if not done:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 raise SystemExit
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                clicked = clicked_square(*pygame.mouse.get_pos())
+                if counter == -1:
+                    done = True
+                elif clicked in displayed:
+                    displayed = displayed[displayed != clicked] # make sure square cant be clicked multiple times
+                    counter -= 1
+                    square = clicked
+                    pygame.draw.rect(screen, 'white', squares[square],border_radius=20)
+                    if counter == 0:
+                        win_sound.play()
+                    else:
+                        move_sound.play()
+                    pygame.display.flip()
 
-            if counter == 0:
-                rounds += 1
-                done = True
-                time.sleep(0.8)
+                else:
+                    # This is what happens when you lose
+                    screen.fill("#FF0000")
+                    points = points_font.render(f'{rounds}', True, '#B50012')
+                    points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
+                    screen.blit(points, points_pos)
+                    # screen.blit(font.render('THIS WINDOW WILL CLOSE IN 5 SECONDS', True, 'white'), (10, 400))
+                    pygame.display.flip()
+                    print(f'\nYou lost. Score: {rounds}')
+                    time.sleep(3)
+                    pygame.quit()
+                    raise SystemExit
 
-    while done:
+                if counter == 0:
+                    rounds += 1
+                    done = True
+                    time.sleep(0.8)
+
+    if done:
         done = False
 
         # draw screen and squares
@@ -112,6 +109,7 @@ while True:
         for i in squares:
             pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
 
+        pygame.event.clear()
         pygame.display.flip()  # Refresh on-screen display
 
     clock.tick(60)         # wait until next frame (at 60 FPS)
