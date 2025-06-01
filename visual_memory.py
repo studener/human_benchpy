@@ -2,6 +2,7 @@ import pygame
 import time
 import numpy as np
 import pandas as pd
+from plot_scores import make_plot
 
 pygame.init()
 
@@ -19,6 +20,8 @@ clock = pygame.time.Clock()
 
 # Variables
 done = False # Puts game loop on hold until mouse has been clicked required number of times
+player = True
+lost = False
 rounds = 0 # counts number of rounds
 displayed = [1] # saves lit up squares
 counter = -1 # keep track of how many times mouse has been clicked
@@ -44,7 +47,7 @@ def clicked_square(x,y):
 
 while True:
     # Process player inputs.
-    if not done:
+    if player:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -63,27 +66,21 @@ while True:
                     else:
                         move_sound.play()
                     pygame.display.flip()
-
                 else:
-                    # This is what happens when you lose
-                    screen.fill("#FF0000")
-                    points = points_font.render(f'{rounds}', True, '#B50012')
-                    points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
-                    screen.blit(points, points_pos)
-                    # screen.blit(font.render('THIS WINDOW WILL CLOSE IN 5 SECONDS', True, 'white'), (10, 400))
-                    pygame.display.flip()
                     print(f'\nYou lost. Score: {rounds}')
-                    time.sleep(3)
-                    pygame.quit()
-                    raise SystemExit
+                    lost = True
+                    lost_clicked = 0
+                    player = False
 
                 if counter == 0:
                     rounds += 1
                     done = True
+                    player = False
                     time.sleep(0.8)
 
     if done:
         done = False
+        player = True
 
         # draw screen and squares
         screen.fill("#57B7F3")
@@ -111,5 +108,32 @@ while True:
 
         pygame.event.clear()
         pygame.display.flip()  # Refresh on-screen display
+
+    if lost:
+        if lost_clicked == 0:
+            # This is what happens when you lose
+            screen.fill("#FF0000")
+            points = points_font.render(f'{rounds}', True, '#B50012')
+            points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
+            screen.blit(points, points_pos)
+            pygame.display.flip()
+
+        if lost_clicked == 1:
+            df = pd.DataFrame({'Score':[rounds]})
+            df.to_csv('scores/visual_memory.csv', mode='a', index=False, header=False)
+            make_plot('visual_memory')
+
+            hist = pygame.image.load('scores/visual_memory.png')
+            screen.fill('#FFFFFF')
+            screen.blit(hist, (0,60))
+            pygame.display.flip()
+            lost_clicked += 1
+        
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                lost_clicked += 1
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
 
     clock.tick(60)         # wait until next frame (at 60 FPS)
