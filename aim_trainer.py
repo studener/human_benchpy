@@ -50,7 +50,7 @@ while True:
                     finished = True
                     finished_clicked = 0
                     player = False
-                    interval = round((time.time()-start)/15, 2)
+                    interval = round((time.time()-start)/15, 3)
                     print(f'\nAverage Time: {interval}s')
 
     if done:
@@ -72,7 +72,7 @@ while True:
             pygame.display.flip()
 
         if finished_clicked == 1:
-            df = pd.DataFrame({'Score':[int(interval*100)]})
+            df = pd.DataFrame({'Score':[int(interval*1000)]})
             df.to_csv('scores/aim_trainer.csv', mode='a', index=False, header=False)
             make_plot('aim_trainer')
 

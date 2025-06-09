@@ -24,5 +24,8 @@ def make_plot(game: str):
         quant = int(100*(scores[:-1]<scores[-1]).mean())
 
     plt.axvline(x=scores[-1], color='red')
-    plt.title(f'You scored {scores[-1]}.\nThis is better than {quant}% of all players.')
+    if game == "aim_trainer":
+        plt.title(f'You took {scores[-1]}ms on average.\nThis is faster than {100-quant}% of all players.')
+    else:
+        plt.title(f'You scored {scores[-1]}.\nThis is better than {quant}% of all players.')
     plt.savefig(f'scores/{game}.png')
