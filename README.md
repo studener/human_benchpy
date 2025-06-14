@@ -19,4 +19,6 @@ After that, you can play your desired game by running e.g.
 python sequence_memory.py
 ```
 
+After playing a game you will be able to see your score compared to other (dummy) scores. To remove the dummy data, you have to delete it manually from the .csv files in `/scores`.
+
 Python 3.11 was used for the project.
