@@ -8,12 +8,14 @@ def make_plot(game: str):
     scores = np.array(df.Scores)
 
     plt.figure(figsize=(720/100, 500/100), dpi=100)
-    if game == "aim_trainer":
-        bins = None#np.arange(min(scores)-2, max(scores)+2)-0.5
-        plt.xlabel("Time in Milliseconds")
+    plt.xlabel("Score")
+    
+    if game == "aim_trainer" or game == "verbal_memory":
+        if game == "aim_trainer":
+            plt.xlabel("Time in Milliseconds")
+        bins = 20 #np.arange(min(scores)-2, max(scores)+2)-0.5
     else:
         plt.xticks(range(max(scores)+1))
-        plt.xlabel("Score")
         bins = np.arange(max(scores)+2)-0.5
 
     plt.hist(scores, color='lightblue', edgecolor='black', bins=bins, align="mid")
