@@ -6,12 +6,16 @@ from plot_scores import make_plot
 
 pygame.init()
 
+pygame.display.set_caption('Number Memory')
+icon = pygame.image.load('assets/icon.png')
+pygame.display.set_icon(icon)
+
 screen = pygame.display.set_mode((720,720))
 font = pygame.font.Font(size=100)
 points_font = pygame.font.Font(size=1000)
 title = pygame.font.Font(size=75)
 
-screen.fill("#57B7F3")
+screen.fill('#57B7F3')
 start_text = title.render('CLICK TO PLAY', True, 'white')
 text_pos = start_text.get_rect(center = pygame.display.get_surface().get_rect().center)
 screen.blit(start_text, text_pos)
@@ -33,7 +37,7 @@ while True:
     if number > -1:
         for event in pygame.event.get():
             if player:
-                screen.fill("#57B7F3")
+                screen.fill('#57B7F3')
                 pygame.draw.rect(screen, '#3478C6', (100, 315, 520, 80), border_radius=5)
                 guessed = font.render(f'{guess}', True, '#FFFFFF')
                 guess_pos = guessed.get_rect(center = pygame.display.get_surface().get_rect().center)
@@ -69,7 +73,7 @@ while True:
         countdown = True
 
         # draw screen
-        screen.fill("#57B7F3")
+        screen.fill('#57B7F3')
         number = np.random.randint(10**(digits-1), 10**(digits))
         points = font.render(f'{number}', True, '#FFFFFF')
         points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
@@ -87,13 +91,13 @@ while True:
         else:
             player = True
             countdown = False
-            screen.fill("#57B7F3")
+            screen.fill('#57B7F3')
             pygame.draw.rect(screen, '#3478C6', (100, 315, 520, 80), border_radius=5)
             pygame.display.flip()
 
     if lost:
         if lost_clicked == 0:
-            screen.fill("#FF0000")
+            screen.fill('#FF0000')
             points = points_font.render(f'{digits-2}', True, '#B50012')
             points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
             screen.blit(points, points_pos)

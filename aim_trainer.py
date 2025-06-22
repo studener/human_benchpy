@@ -6,11 +6,15 @@ from plot_scores import make_plot
 
 pygame.init()
 
+pygame.display.set_caption('Aim Trainer')
+icon = pygame.image.load('assets/icon.png')
+pygame.display.set_icon(icon)
+
 screen = pygame.display.set_mode((720,720))
 font = pygame.font.Font(size=75)
 points_font = pygame.font.Font(size=150)
 
-screen.fill("#57B7F3")
+screen.fill('#57B7F3')
 start_text = font.render('CLICK TO PLAY', True, 'white')
 text_pos = start_text.get_rect(center = pygame.display.get_surface().get_rect().center)
 screen.blit(start_text, text_pos)
@@ -58,14 +62,14 @@ while True:
         done = False
 
         # draw screen and circle
-        screen.fill("#57B7F3")
+        screen.fill('#57B7F3')
         xcord, ycord = np.random.randint(low=50, high=670, size = 2)
         pygame.draw.circle(screen, '#FFFFFF', (xcord, ycord), 50)
         pygame.display.flip()
 
     if finished:
         if finished_clicked == 0:
-            screen.fill("#57B7F3")
+            screen.fill('#57B7F3')
             points = points_font.render(f'{interval}s', True, '#FFFFFF')
             points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
             screen.blit(points, points_pos)

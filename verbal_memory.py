@@ -5,11 +5,15 @@ from plot_scores import make_plot
 
 pygame.init()
 
+pygame.display.set_caption('Verbal Memory')
+icon = pygame.image.load('assets/icon.png')
+pygame.display.set_icon(icon)
+
 screen = pygame.display.set_mode((720,720))
 font = pygame.font.Font(size=75)
 img = pygame.image.load('assets/verbmem.png')
 points_font = pygame.font.Font(size=1000)
-screen.fill("#57B7F3")
+screen.fill('#57B7F3')
 start_text = font.render('CLICK TO PLAY', True, 'white')
 text_pos = start_text.get_rect(center = pygame.display.get_surface().get_rect().center)
 screen.blit(start_text, text_pos)
@@ -17,7 +21,7 @@ pygame.display.flip()
 clock = pygame.time.Clock()
 
 # Variables
-words = open("assets/words.txt", "r").readlines() # source for list of words: https://gist.github.com/cjhveal/3753018#file-gistfile1-txt
+words = open('assets/words.txt', 'r').readlines() # source for list of words: https://gist.github.com/cjhveal/3753018#file-gistfile1-txt
 seen = []
 truth = 'new'
 rounds = -1 # counts number of rounds
@@ -29,8 +33,8 @@ lost_clicked = 0
 
 def clicked_half(x):
     if x <= 360:
-        return "seen"
-    return "new"
+        return 'seen'
+    return 'new'
 
 while True:
     # Process player inputs.
@@ -48,7 +52,7 @@ while True:
                     del words[index]
                     seen.append(word)
 
-                    screen.fill("#57B7F3")
+                    screen.fill('#57B7F3')
                     word = font.render(f'{word}', True, 'white')
                     pos = word.get_rect(center = pygame.display.get_surface().get_rect().center)
                     screen.blit(word, pos)
@@ -89,7 +93,7 @@ while True:
             truth = 'new'
 
         # draw screen and squares
-        screen.fill("#57B7F3")
+        screen.fill('#57B7F3')
         word = font.render(f'{word}', True, 'white')
         pos = word.get_rect(center = pygame.display.get_surface().get_rect().center)
         screen.blit(word, pos)
@@ -99,7 +103,7 @@ while True:
 
     if lost:
         if lost_clicked == 0:
-            screen.fill("#FF0000")
+            screen.fill('#FF0000')
             points = points_font.render(f'{rounds}', True, '#B50012')
             points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
             screen.blit(points, points_pos)

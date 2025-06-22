@@ -6,12 +6,16 @@ from plot_scores import make_plot
 
 pygame.init()
 
+pygame.display.set_caption('Sequence Memory')
+icon = pygame.image.load('assets/icon.png')
+pygame.display.set_icon(icon)
+
 screen = pygame.display.set_mode((720,720))
 move_sound = pygame.mixer.Sound('assets/move.mp3')
 win_sound = pygame.mixer.Sound('assets/win.mp3')
 font = pygame.font.Font(size=75)
 points_font = pygame.font.Font(size=1000)
-screen.fill("#57B7F3")
+screen.fill('#57B7F3')
 start_text = font.render('CLICK TO PLAY', True, 'white')
 text_pos = start_text.get_rect(center = pygame.display.get_surface().get_rect().center)
 screen.blit(start_text, text_pos)
@@ -55,7 +59,7 @@ while True:
                     pygame.draw.rect(screen, '#3478C6', squares[square],border_radius=20)
                     pygame.display.flip()
                     if counter == 0:
-                        screen.fill("#4A97C7")
+                        screen.fill('#4A97C7')
                         for i in squares:
                             pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
                 else:
@@ -75,7 +79,7 @@ while True:
         player = True
 
         # draw screen and squares
-        screen.fill("#57B7F3")
+        screen.fill('#57B7F3')
         for i in squares:
             pygame.draw.rect(screen, '#3478C6', squares[i],border_radius=20)
 
@@ -103,7 +107,7 @@ while True:
 
     if lost:
         if lost_clicked == 0:
-            screen.fill("#FF0000")
+            screen.fill('#FF0000')
             points = points_font.render(f'{len(rounds)-1}', True, '#B50012')
             points_pos = points.get_rect(center = pygame.display.get_surface().get_rect().center)
             screen.blit(points, points_pos)
